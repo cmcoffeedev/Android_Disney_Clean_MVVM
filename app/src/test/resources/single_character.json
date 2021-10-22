@@ -1,0 +1,17 @@
+{
+  "_id": 6,
+  "films": [],
+  "shortFilms": [],
+  "tvShows": [],
+  "videoGames": [],
+  "parkAttractions": [],
+  "allies": [],
+  "enemies": [],
+  "sourceUrl": "https://disney.fandom.com/wiki/%27Olu_Mel",
+  "name": "'Olu Mel",
+  "imageUrl": "https://static.wikia.nocookie.net/disney/images/6/61/Olu_main.png/revision/latest?cb=20200630025227",
+  "createdAt": "2021-04-12T01:25:09.759Z",
+  "updatedAt": "2021-04-12T01:25:09.759Z",
+  "url": "https://api.disneyapi.dev/characters/6",
+  "__v": 0
+}

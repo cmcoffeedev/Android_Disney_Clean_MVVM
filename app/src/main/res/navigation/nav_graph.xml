@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/disneyCharactersFragment">
+
+    <fragment
+        android:id="@+id/disneyCharactersFragment"
+        android:name="com.interview.disney.presentation.DisneyCharactersFragment"
+        android:label="Disney Characters"
+        tools:layout="@layout/fragment_disney_characters">
+        <action
+            android:id="@+id/action_disneyCharactersFragment_to_characterDetailFragment"
+            app:destination="@id/characterDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterDetailFragment"
+        android:name="com.interview.disney.presentation.CharacterDetailFragment"
+        android:label="Disney Character"
+        tools:layout="@layout/fragment_character_detail">
+        <argument
+            android:name="characterId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_characterDetailFragment_to_disneyCharactersFragment"
+            app:popUpTo="@id/disneyCharactersFragment" />
+    </fragment>
+</navigation>

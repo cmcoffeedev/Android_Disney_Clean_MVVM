@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Disney Characters</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="single_tv_shows" />
+    <string name="character_name">Character Name</string>
+    <string name="character_detail_image">Character Detail Image</string>
+</resources>
