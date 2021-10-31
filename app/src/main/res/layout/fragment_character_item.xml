@@ -3,6 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <data>
+        <variable
+            name="characterItem"
+            type="com.interview.disney.domain.model.DisneyCharacter" />
+    </data>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="187dp">
@@ -12,6 +20,7 @@
             android:id="@+id/characterName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{characterItem.name}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="@+id/imageView"
@@ -22,6 +31,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="25dp"
+            app:loadImageWithPicasso="@{characterItem.imageUrl}"
             android:contentDescription="@string/character_name"
             android:layout_marginStart="224dp"
             android:layout_marginTop="16dp"
