@@ -18,13 +18,19 @@ class CharacterAdapter(private val characters:List<DisneyCharacter>, private val
 
 
 
-    inner class CharacterViewHolder(characterItemBinding: FragmentCharacterItemBinding): RecyclerView.ViewHolder(characterItemBinding.root), View.OnClickListener {
+    inner class CharacterViewHolder(private val characterItemBinding: FragmentCharacterItemBinding): RecyclerView.ViewHolder(characterItemBinding.root), View.OnClickListener {
         val characterName: TextView = characterItemBinding.characterName
         val characterImg: ImageView = characterItemBinding.imageView
 
         val view : View = characterItemBinding.root
 
+        init {
+            view.setOnClickListener(this)
+        }
 
+        fun bind(character: DisneyCharacter){
+            characterItemBinding.characterItem = character
+        }
 
         override fun onClick(view: View?) {
             characterClickListener.clickedCharacter(characters[adapterPosition])
@@ -43,16 +49,6 @@ class CharacterAdapter(private val characters:List<DisneyCharacter>, private val
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-
-        holder.view.setOnClickListener(holder)
-
-        val character = characters[position]
-        holder.characterName.text = character.name
-        Picasso.
-        get()
-            .load(character.imageUrl)
-            .placeholder(R.drawable.ic_launcher_background)
-            .error(R.drawable.ic_launcher_background)
-            .into(holder.characterImg)
+        holder.bind(characters[position])
     }
 }
