@@ -17,7 +17,7 @@ data class CharacterDTO(
     @SerializedName("films")
     val films: List<String>,
     @SerializedName("imageUrl")
-    val imageUrl: String,
+    val imageUrl: String?,
     @SerializedName("name")
     val name: String,
     @SerializedName("parkAttractions")

@@ -3,52 +3,65 @@ package com.interview.disney.presentation.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.interview.disney.R
 import com.interview.disney.databinding.FragmentCharacterItemBinding
 import com.interview.disney.domain.model.DisneyCharacter
 import com.interview.disney.presentation.CharacterClickListener
-import com.squareup.picasso.Picasso
 
 
+class CharacterAdapter(private val characterClickListener: CharacterClickListener) :
+    PagingDataAdapter<DisneyCharacter, CharacterAdapter.CharacterViewHolder>(diffCallback) {
 
-class CharacterAdapter(private val characters:List<DisneyCharacter>, private val characterClickListener: CharacterClickListener) : RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder>(){
 
+    inner class CharacterViewHolder(private val characterItemBinding: FragmentCharacterItemBinding) :
+        RecyclerView.ViewHolder(characterItemBinding.root), View.OnClickListener {
 
-
-    inner class CharacterViewHolder(private val characterItemBinding: FragmentCharacterItemBinding): RecyclerView.ViewHolder(characterItemBinding.root), View.OnClickListener {
-        val characterName: TextView = characterItemBinding.characterName
-        val characterImg: ImageView = characterItemBinding.imageView
-
-        val view : View = characterItemBinding.root
+        val view: View = characterItemBinding.root
 
         init {
             view.setOnClickListener(this)
         }
 
-        fun bind(character: DisneyCharacter){
+        fun bind(character: DisneyCharacter) {
             characterItemBinding.characterItem = character
         }
 
         override fun onClick(view: View?) {
-            characterClickListener.clickedCharacter(characters[adapterPosition])
+
+            getItem(absoluteAdapterPosition)?.let { characterClickListener.clickedCharacter(it) }
         }
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):  CharacterViewHolder{
-        val binding = FragmentCharacterItemBinding.inflate(LayoutInflater.from(parent.context),parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
+        val binding =
+            FragmentCharacterItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CharacterViewHolder(binding)
     }
 
 
-    override fun getItemCount(): Int {
-        return characters.size
+    override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
+        getItem(position)?.let { holder.bind(it) }
     }
 
-    override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.bind(characters[position])
+    companion object {
+
+        private val diffCallback = object : DiffUtil.ItemCallback<DisneyCharacter>() {
+            override fun areItemsTheSame(
+                oldItem: DisneyCharacter,
+                newItem: DisneyCharacter
+            ): Boolean =
+                oldItem.id == newItem.id
+
+            override fun areContentsTheSame(
+                oldItem: DisneyCharacter,
+                newItem: DisneyCharacter
+            ): Boolean =
+                oldItem == newItem
+        }
     }
+
+
 }

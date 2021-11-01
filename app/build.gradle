@@ -61,6 +61,10 @@ dependencies {
 
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
 
+    // paging
+    implementation "androidx.paging:paging-runtime-ktx:3.0.1"
+
+
     // For Robolectric tests.
     testImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
 

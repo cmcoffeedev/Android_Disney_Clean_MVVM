@@ -5,5 +5,6 @@ class DisneyConstants {
         const val BASE_URL = "https://api.disneyapi.dev/"
         const val CHARACTERS = "characters"
         const val CHARACTER_PATH = "id"
+        const val PAGE_QUERY = "page"
     }
 }

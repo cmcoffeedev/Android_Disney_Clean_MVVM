@@ -7,7 +7,7 @@ data class DisneyCharacter(
     val createdAt: String,
     val enemies: List<String>,
     val films: List<String>,
-    val imageUrl: String,
+    val imageUrl: String?,
     val name: String,
     val parkAttractions: List<String>,
     val shortFilms: List<String>,
