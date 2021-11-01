@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,9 @@ import com.interview.disney.domain.model.DisneyCharacter
 import com.interview.disney.presentation.adapters.CharacterAdapter
 import com.interview.disney.presentation.viewmodels.CharacterViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,6 +38,7 @@ class DisneyCharactersFragment : Fragment(), CharacterClickListener {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var mBinding: FragmentDisneyCharactersBinding
+    private var mJob: Job? = null
 
     private val mCharacters = ArrayList<DisneyCharacter>()
     private val mCharacterViewModel: CharacterViewModel by viewModels()
@@ -50,11 +55,18 @@ class DisneyCharactersFragment : Fragment(), CharacterClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mCharacterViewModel.characters().observe(viewLifecycleOwner, { characters ->
-            mCharacters.clear()
-            mCharacters.addAll(characters)
-            mCharacterAdapter.notifyItemRangeChanged(0, characters.size)
-        })
+        mJob?.cancel()
+        mJob = viewLifecycleOwner.lifecycleScope.launch {
+            mCharacterViewModel.getCharacters().collect { resource ->
+                resource.data?.let{ data ->
+                    data.collect {
+                        mCharacterAdapter.submitData(it)
+                    }
+                }
+
+            }
+        }
+
     }
 
     override fun onCreateView(
@@ -65,7 +77,7 @@ class DisneyCharactersFragment : Fragment(), CharacterClickListener {
         mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_disney_characters, container, false )
         val recyclerView = mBinding.list
 
-        mCharacterAdapter = CharacterAdapter(mCharacters, this)
+        mCharacterAdapter = CharacterAdapter(this)
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)

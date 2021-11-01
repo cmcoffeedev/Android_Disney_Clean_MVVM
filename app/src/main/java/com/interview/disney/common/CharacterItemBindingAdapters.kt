@@ -9,7 +9,7 @@ object CharacterItemBindingAdapters {
 
     @JvmStatic
     @BindingAdapter("app:loadImageWithPicasso")
-    fun ImageView.loadImageUrl(imageUrl: String){
+    fun ImageView.loadImageUrl(imageUrl: String?){
         Picasso.
         get()
             .load(imageUrl)
